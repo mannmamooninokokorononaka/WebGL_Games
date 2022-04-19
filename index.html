@@ -2,20 +2,27 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Gamedev Canvas Workshop</title>
+    <title>オセロの板と駒</title>
     <style>
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
     </style>
 </head>
 <body style="text-align:center">
-    <h1>作成なり</h1><br><small>MANNMAMOONI</small>
-<canvas id="myCanvas" width="560" height="560" ></canvas>
+    <h1>オセロの板と駒</h1><br><small>なんかやるといい感じになる</small>
+    <canvas id="myStatus" width = "560" height="120" style=""></canvas>
+<canvas id="myCanvas" width="560" height="560" style="position: relative" ></canvas>
+    
 
 <script>
 
     var canvas = document.getElementById("myCanvas");
+    var canvas2 = document.getElementById("myStatus");
     var ctx = canvas.getContext("2d");
+    var ctx2 = canvas2.getContext("2d");
+
+    //ctx2.fillStyle = "#000000";
+    //ctx2.fillRect(100,100,100,100);
 
     var OseroMathInf = new Array(8);//=0 何もない,=1 白,=2 黒
     for(var i = 0;i < 8;i++)
@@ -27,15 +34,8 @@
                 }
         }
     var X = 0,Y = 0,WhoTurn = 1;//,=1 白,=2 黒
-
-        canvas.addEventListener("click", (e) => {
-        if(WhoTurn == 1)
-        {
-            WhoTurn = 2;
-        }else if(WhoTurn == 2)
-        {
-            WhoTurn = 1;
-        }
+    var X2 = 0,Y2 = 0;
+    canvas.addEventListener("click", (e) => {
     var rect = e.target.getBoundingClientRect()
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
@@ -43,11 +43,48 @@
     X = x;
         Y = y;
     });
+
+    canvas2.addEventListener("click", (e2) => {
+    var rect2 = e2.target.getBoundingClientRect()
+    var x2 = e2.clientX - rect2.left
+    var y2 = e2.clientY - rect2.top
+    //console.log(`${x}:${y}`)
+    X2= x2;
+    Y2 = y2;
+    });
     
 function draw() 
 {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+    ctx2.beginPath();
+    ctx2.fillStyle = "#FF0000"
+    ctx2.fillRect(0,0,560,200);
+    ctx2.fillStyle= "#FFFFFF";
+    ctx2.arc(100,60,50,0,Math.PI*2,false);
+    ctx2.fill();
+    ctx2.closePath();
+    ctx2.beginPath();
+    ctx2.fillStyle= "#000000";
+    ctx2.arc(250,60,50,0,Math.PI*2,false);
+    ctx2.fill();
+    ctx2.fillStyle= "#FFFFFF";
+    ctx2.fillRect(350,10,100,100);
+    ctx2.closePath();
+     if(50 < X2 && 150 > X2 && 10 < Y2 && 110 > Y2)
+     {
+          WhoTurn = 1;
+     }
+     if(200 < X2 && 300 > X2 && 10 < Y2 && 110 > Y2)
+     {
+          WhoTurn = 2;
+     }
+         if(350 < X2 && 450 > X2 && 10 < Y2 && 110 > Y2)
+     {
+          WhoTurn = 0;
+     }
+
 
     //ここでマス目設定
     ctx.beginPath();
@@ -71,13 +108,10 @@ function draw()
         {
             for(var i2 = 0;i2 < 8; i2++)
             {
-                if(OseroMathInf[i][i2] == 0)
-                {
-                    if(70*i < X && 70*(i+1) > X && 70*i2 < Y && 70*(i2+1) > Y)
-                    {
-                        OseroMathInf[i][i2] = WhoTurn;
-                    }
-                }
+               if(70*i < X && 70*(i+1) > X && 70*i2 < Y && 70*(i2+1) > Y)
+               {
+                    OseroMathInf[i][i2] = WhoTurn;
+              }
                 if(OseroMathInf[i][i2] == 1)
                 {
                     ctx.beginPath();
