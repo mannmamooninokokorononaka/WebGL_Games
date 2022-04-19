@@ -45,7 +45,7 @@ function draw()
     ctx.closePath();
     //ここまででマス目設定
     
-    canvas.addEventListener("click", (e) => {
+    canvas.addEventListener("touched", (e) => {
         if(WhoTurn == 1)
         {
             WhoTurn = 2;
