@@ -27,6 +27,23 @@
                 }
         }
     var X = 0,Y = 0,WhoTurn = 1;//,=1 白,=2 黒
+
+        canvas.addEventListener("click", (e) => {
+        if(WhoTurn == 1)
+        {
+            WhoTurn = 2;
+        }else if(WhoTurn == 2)
+        {
+            WhoTurn = 1;
+        }
+    var rect = e.target.getBoundingClientRect()
+    var x = e.clientX - rect.left
+    var y = e.clientY - rect.top
+    //console.log(`${x}:${y}`)
+    X = x;
+        Y = y;
+    });
+    
 function draw() 
 {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -45,21 +62,7 @@ function draw()
     ctx.closePath();
     //ここまででマス目設定
     
-    canvas.addEventListener("touched", (e) => {
-        if(WhoTurn == 1)
-        {
-            WhoTurn = 2;
-        }else if(WhoTurn == 2)
-        {
-            WhoTurn = 1;
-        }
-    var rect = e.target.getBoundingClientRect()
-    var x = e.clientX - rect.left
-    var y = e.clientY - rect.top
-    //console.log(`${x}:${y}`)
-    X = x;
-        Y = y;
-    });
+
     ctx.beginPath();
     ctx.fillStyle = '#000000';
     ctx.closePath();
