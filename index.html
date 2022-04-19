@@ -1,13 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebGlテスト用</title>
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
 </head>
-  <body>
-    <h1>こんにちゃ。やったぜ。</h1>
-    </body>
+<body style="text-align:center">
+    <h1>作成なり</h1><br><small>MANNMAMOONI</small>
+<canvas id="myCanvas" width="560" height="560"></canvas>
+
+<script>
+
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    
+
+    var X = 0,Y = 0;
+function draw() 
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+
+    //ここでマス目設定
+    ctx.beginPath();
+    ctx.fillStyle = '#006400';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#000000";
+    for(var i  = 0;i < 9;i++)
+        {
+            ctx.fillRect(-5+70*i,0,10,560);
+            ctx.fillRect(0,-5+70*i,560,10);
+        }
+    ctx.closePath();
+    //ここまででマス目設定
+    
+    ctx.beginPath();
+    canvas.addEventListener("click", (e) => {
+    var rect = e.target.getBoundingClientRect()
+    var x = e.clientX - rect.left
+    var y = e.clientY - rect.top
+    //console.log(`${x}:${y}`)
+    X = x;
+        Y = y;
+    });
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(X, Y, 10, 10);
+    
+    //ctx.fillRect(X, Y, 10, 10);
+    ctx.closePath();
+    // 描画コード
+}
+setInterval(draw, 10);
+
+</script>
+
+</body>
 </html>
