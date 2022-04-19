@@ -17,9 +17,16 @@
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
 
-    
-
-    var X = 0,Y = 0;
+    var OseroMathInf = new Array(8);//=0 何もない,=1 白,=2 黒
+    for(var i = 0;i < 8;i++)
+        {
+            OseroMathInf[i] = Array(8);
+            for(var i2 = 0;i2 < 8;i2++)
+                {
+                    OseroMathInf[i][i2] = 0;
+                }
+        }
+    var X = 0,Y = 0,WhoTurn = 1;//,=1 白,=2 黒
 function draw() 
 {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -38,8 +45,14 @@ function draw()
     ctx.closePath();
     //ここまででマス目設定
     
-    ctx.beginPath();
     canvas.addEventListener("click", (e) => {
+        if(WhoTurn == 1)
+        {
+            WhoTurn = 2;
+        }else if(WhoTurn == 2)
+        {
+            WhoTurn = 1;
+        }
     var rect = e.target.getBoundingClientRect()
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
@@ -47,10 +60,44 @@ function draw()
     X = x;
         Y = y;
     });
+    ctx.beginPath();
     ctx.fillStyle = '#000000';
-    ctx.fillRect(X, Y, 10, 10);
+    ctx.closePath();
+    
+    for(var i = 0;i < 8; i++)
+        {
+            for(var i2 = 0;i2 < 8; i2++)
+            {
+                if(OseroMathInf[i][i2] == 0)
+                {
+                    if(70*i < X && 70*(i+1) > X && 70*i2 < Y && 70*(i2+1) > Y)
+                    {
+                        OseroMathInf[i][i2] = WhoTurn;
+                    }
+                }
+                if(OseroMathInf[i][i2] == 1)
+                {
+                    ctx.beginPath();
+                    ctx.fillStyle = '#ffffff';
+                    //ctx.fillRect(i*70+5 ,i2*70+5 ,55, 55);
+                      ctx.arc(i*70+35 ,i2*70+35, 30,0, Math.PI*2, false);
+                      ctx.fill();
+                    ctx.closePath();
+                }
+                if(OseroMathInf[i][i2] == 2)
+                {
+                    ctx.beginPath();
+                    ctx.fillStyle = '#000000';
+                    //ctx.fillRect(i*70+5 ,i2*70+5 ,55, 55);
+                      ctx.arc(i*70+35 ,i2*70+35, 30,0, Math.PI*2, false);
+                      ctx.fill();
+                    ctx.closePath();
+                }
+            }
+        }
     
     //ctx.fillRect(X, Y, 10, 10);
+    
     ctx.closePath();
     // 描画コード
 }
