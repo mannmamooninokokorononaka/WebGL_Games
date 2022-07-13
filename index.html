@@ -16,6 +16,9 @@
 
 <script>
 
+
+    var EROCOLOR_CHANGE = 'red';
+    
     var canvas = document.getElementById("myCanvas");
     var canvas2 = document.getElementById("myStatus");
     var ctx = canvas.getContext("2d");
@@ -137,11 +140,21 @@ function draw()
     
     ctx.closePath();
     // 描画コード
+
+    var EROURL = document.getElementById("ELOTIC_PHOTO_URL");
+    EROURL.style.color = EROCOLOR_CHANGE;
+    if(EROCOLOR_CHANGE == 'red')
+    {
+        EROCOLOR_CHANGE = 'blue';
+    }else {
+        EROCOLOR_CHANGE = 'red';
+    }
+    
 }
 setInterval(draw, 10);
 
 </script><br>
 <a href="https://youtube.com"><img src="NorthKoreaFlagOnKinJongUn.png" title="広告１"></a>
-    <br>エッチな★画★像★<br>
+    <br><a id="ELOTIC_PHOTO_URL" href ="SexPictures.html">エッチな★画★像★</a><br>
 </body>
 </html>
